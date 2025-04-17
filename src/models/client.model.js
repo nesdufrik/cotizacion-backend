@@ -15,12 +15,8 @@ const clientSchema = new mongoose.Schema(
 			lowercase: true,
 		},
 		customPricing: {
-			type: Map,
-			of: {
-				basePrice: Number,
-				discount: Number,
-			},
-			default: new Map(),
+			type: Boolean,
+			default: false,
 		},
 		phone: {
 			type: String,

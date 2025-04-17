@@ -7,6 +7,7 @@ import swaggerJsDoc from 'swagger-jsdoc'
 import authRoutes from './routes/auth.routes.js'
 import categoryRoutes from './routes/category.routes.js'
 import quoteRoutes from './routes/quote.routes.js'
+import clientRoutes from './routes/client.routes.js'
 
 // Inicialización de Express
 const app = express()
@@ -50,6 +51,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
 app.use('/api/auth', authRoutes)
 app.use('/api/categories', categoryRoutes)
 app.use('/api/quotes', quoteRoutes)
+app.use('/api/clients', clientRoutes)
 
 // Ruta de bienvenida
 app.get('/', (req, res) => {

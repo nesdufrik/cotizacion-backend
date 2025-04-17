@@ -29,6 +29,7 @@ const clientSchema = z.object({
 	phone: z.string().optional(),
 	address: z.string().optional(),
 	notes: z.string().optional(),
+	customPricing: z.boolean().optional()
 })
 
 // Esquema de servicio
