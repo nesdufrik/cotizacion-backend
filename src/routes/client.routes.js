@@ -1,8 +1,11 @@
-import express from 'express'
-const router = express.Router()
+import {Router} from 'express'
 import clientController from '../controllers/client.controller.js'
 import { authenticateToken, authorizeRole, validateSchema } from '../middleware/auth.middleware.js'
 import { clientSchema } from '../schemas/validation.schemas.js'
+
+const router = Router()
+// Rutas protegidas que requieren autenticación
+router.use(authenticateToken)
 
 /**
  * @swagger
@@ -19,7 +22,7 @@ import { clientSchema } from '../schemas/validation.schemas.js'
  *       401:
  *         description: No autorizado
  */
-router.get('/', authenticateToken, clientController.getClients)
+router.get('/', clientController.getClients)
 
 /**
  * @swagger
@@ -62,6 +65,6 @@ router.get('/', authenticateToken, clientController.getClients)
  *       400:
  *         description: Datos de entrada inválidos
  */
-router.post('/', authenticateToken, authorizeRole(['admin']), validateSchema(clientSchema), clientController.createClient)
+router.post('/', authorizeRole(['admin']), validateSchema(clientSchema), clientController.createClient)
 
 export default router

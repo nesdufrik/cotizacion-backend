@@ -4,8 +4,18 @@ const quoteSchema = new mongoose.Schema(
 	{
 		customerId: {
 			type: mongoose.Schema.Types.ObjectId,
-			ref: 'Client',
+			ref: 'Client'
+		},
+		customerName: {
+			type: String,
 			required: true,
+			trim: true,
+		},
+		customerEmail: {
+			type: String,
+			required: true,
+			trim: true,
+			lowercase: true,
 		},
 		services: [
 			{

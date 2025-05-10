@@ -91,6 +91,23 @@ router.get('/:id', authenticateToken, quoteController.getQuoteById)
 
 /**
  * @swagger
+ * /quotes:
+ *   get:
+ *     tags:
+ *       - Cotizaciones
+ *     summary: Obtener todas las cotizaciones
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: Lista de cotizaciones
+ *       404:
+ *         description: No se encontraron cotizaciones
+ */
+router.get('/', authenticateToken, quoteController.getQuotes)
+
+/**
+ * @swagger
  * /quotes/{id}/status:
  *   patch:
  *     tags:

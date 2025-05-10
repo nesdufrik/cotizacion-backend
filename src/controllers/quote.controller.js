@@ -77,6 +77,25 @@ class QuoteController {
 		}
 	}
 
+	// Obtener todas las cotizaciones
+	async getQuotes(req, res) {
+		try {
+			const quotes = await Quote.find()
+				.populate('customerId', 'name email')
+				.populate('services.service', 'name basePrice description')
+
+			res.json({
+				status: 'success',
+				data: { quotes },
+			})
+		} catch (error) {
+			res.status(500).json({
+				status: 'error',
+				message: 'Error al obtener las cotizaciones',
+			})
+		}
+	}
+
 	// Obtener una cotización por ID
 	async getQuoteById(req, res) {
 		try {

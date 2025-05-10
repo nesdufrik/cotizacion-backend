@@ -68,17 +68,17 @@ class ClientController {
         data: { client },
       });
     } catch (error) {
-        if (error.name === "ZodError") {
-          return res.status(400).json({
-            status: "error",
-            message: "El código de cliente ya existe",
-            errors: error.errors,
-          });
-        }
-        res.status(500).json({
+      if (error.name === "ZodError") {
+        return res.status(400).json({
           status: "error",
-          message: "Error al actualizar el cliente", 
-        })
+          message: "El código de cliente ya existe",
+          errors: error.errors,
+        });
+      }
+      res.status(500).json({
+        status: "error",
+        message: "Error al actualizar el cliente",
+      });
     }
   }
 }

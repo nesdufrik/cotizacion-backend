@@ -32,6 +32,18 @@ const clientSchema = z.object({
 	customPricing: z.boolean().optional()
 })
 
+// Esquema de hoja de precios
+const priceSheetSchema = z.object({
+	name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
+	description: z.string().min(10, 'La descripción debe tener al menos 10 caracteres'),
+	services: z.array(
+		z.object({
+			id: z.string().min(1, 'El ID del servicio es requerido'),
+			price: z.number().min(0, 'El precio debe ser mayor o igual a 0'),
+		})
+	).min(1, 'Debe incluir al menos un servicio'),
+})
+
 // Esquema de servicio
 const serviceSchema = z.object({
 	name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
@@ -82,4 +94,5 @@ export {
 	serviceSchema,
 	quoteSchema,
 	emailQuoteProcessSchema,
+	priceSheetSchema,
 }

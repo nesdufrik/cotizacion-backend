@@ -8,6 +8,8 @@ import authRoutes from './routes/auth.routes.js'
 import categoryRoutes from './routes/category.routes.js'
 import quoteRoutes from './routes/quote.routes.js'
 import clientRoutes from './routes/client.routes.js'
+import serviceRoutes from './routes/service.routes.js'
+import priceSheetRoutes from './routes/priceSheet.routes.js'
 
 // Inicialización de Express
 const app = express()
@@ -52,6 +54,8 @@ app.use('/api/auth', authRoutes)
 app.use('/api/categories', categoryRoutes)
 app.use('/api/quotes', quoteRoutes)
 app.use('/api/clients', clientRoutes)
+app.use('/api/services', serviceRoutes)
+app.use('/api/price-sheets', priceSheetRoutes)
 
 // Ruta de bienvenida
 app.get('/', (req, res) => {
