@@ -2,6 +2,7 @@ import express from 'express'
 import cors from 'cors'
 import swaggerUi from 'swagger-ui-express'
 import swaggerJsDoc from 'swagger-jsdoc'
+import { SwaggerTheme, SwaggerThemeNameEnum } from 'swagger-themes'
 
 // Importar rutas
 import authRoutes from './routes/auth.routes.js'
@@ -47,7 +48,15 @@ const swaggerOptions = {
 }
 
 const swaggerDocs = swaggerJsDoc(swaggerOptions)
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs))
+
+// Configuración del tema oscuro para Swagger UI
+const theme = new SwaggerTheme()
+const options = {
+	explorer: true,
+	customCss: theme.getBuffer(SwaggerThemeNameEnum.DARK_MONOKAI)
+}
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocs, options))
 
 // Rutas
 app.use('/api/auth', authRoutes)

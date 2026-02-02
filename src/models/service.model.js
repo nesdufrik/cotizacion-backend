@@ -17,11 +17,6 @@ const serviceSchema = new mongoose.Schema(
 			required: true,
 			trim: true,
 		},
-		basePrice: {
-			type: Number,
-			required: true,
-			min: 0,
-		},
 		description: {
 			type: String,
 			required: true,
@@ -46,6 +41,13 @@ const serviceSchema = new mongoose.Schema(
 				cost: Number,
 			},
 		],
+		scaledRateIndex: {
+			type: Number,
+			min: 0,
+			required: function() {
+				return this.category && this.category.hasScaledPricing;
+			}
+		}
 	},
 	{
 		timestamps: true,

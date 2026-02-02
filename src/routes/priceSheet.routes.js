@@ -73,11 +73,24 @@ router.get('/:id', priceSheetController.getPriceSheetById)
  *                 type: array
  *                 items:
  *                   type: object
+ *                   required:
+ *                     - id
  *                   properties:
- *                     service:
+ *                     id:
  *                       type: string
- *                     price:
+ *                       description: ID del servicio
+ *                     prices:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           price:
+ *                             type: number
+ *                             minimum: 0
+ *                     basePrice:
  *                       type: number
+ *                       minimum: 0
+ *                       description: Requerido si no se especifican precios escalonados
  *     responses:
  *       201:
  *         description: Hoja de precios creada exitosamente
@@ -120,11 +133,24 @@ router.post('/', priceSheetController.createPriceSheet)
  *                 type: array
  *                 items:
  *                   type: object
+ *                   required:
+ *                     - id
  *                   properties:
- *                     service:
+ *                     id:
  *                       type: string
- *                     price:
+ *                       description: ID del servicio
+ *                     prices:
+ *                       type: array
+ *                       items:
+ *                         type: object
+ *                         properties:
+ *                           price:
+ *                             type: number
+ *                             minimum: 0
+ *                     basePrice:
  *                       type: number
+ *                       minimum: 0
+ *                       description: Requerido si no se especifican precios escalonados
  *     responses:
  *       200:
  *         description: Hoja de precios actualizada exitosamente

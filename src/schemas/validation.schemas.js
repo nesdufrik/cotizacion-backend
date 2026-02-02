@@ -20,6 +20,13 @@ const categorySchema = z.object({
 	description: z
 		.string()
 		.min(10, 'La descripción debe tener al menos 10 caracteres'),
+	hasScaledPricing: z.boolean(),
+	scaledRates: z.array(
+		z.object({
+			name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
+			description: z.string().optional()
+		})
+	).optional()
 })
 
 // Esquema de cliente
@@ -86,6 +93,22 @@ const emailQuoteProcessSchema = z.object({
 	originalHtml: z.string().min(1, 'El contenido HTML es requerido'),
 })
 
+// Esquema de hospedaje
+const accommodationSchema = z.object({
+	name: z.string().min(2, 'El nombre debe tener al menos 2 caracteres'),
+	category: z.enum(['*', '**', '***', '****', '*****', 'Boutique'], 'Categoría inválida'),
+	location: z.string().min(1, 'La ubicación es requerida'),
+	description: z.string().min(10, 'La descripción debe tener al menos 10 caracteres'),
+	roomRates: z.array(
+		z.object({
+			type: z.enum(['SWB', 'DWB', 'TWB', 'SUITE'], 'Tipo de habitación inválido'),
+			basePrice: z.number().min(0, 'El precio base debe ser mayor o igual a 0'),
+			breakfast: z.enum(['Buffet', 'Continental', 'Tradicional'], 'Tipo de desayuno inválido'),
+			includes: z.boolean().optional().default(true)
+		})
+	).min(1, 'Debe incluir al menos una tarifa de habitación')
+})
+
 export {
 	userRegisterSchema,
 	userLoginSchema,
@@ -95,4 +118,5 @@ export {
 	quoteSchema,
 	emailQuoteProcessSchema,
 	priceSheetSchema,
+	accommodationSchema,
 }

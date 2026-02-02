@@ -2,6 +2,7 @@ import Quote from '../models/quote.model.js'
 import EmailQuote from '../models/email-quote.model.js'
 import Client from '../models/client.model.js'
 import Service from '../models/service.model.js'
+import PriceTier from '../models/price-tier.model.js'
 import {
 	quoteSchema,
 	emailQuoteProcessSchema,
@@ -33,14 +34,30 @@ class QuoteController {
 					})
 				}
 
-				// Aplicar precio personalizado si existe
-				let price = service.basePrice
-				if (client.customPricing.has(service._id.toString())) {
-					const customPrice = client.customPricing.get(service._id.toString())
-					price = customPrice.basePrice
-				}
+				// Buscar tarifa escalonada activa para el servicio
+                const priceTier = await PriceTier.findOne({
+                    service: service._id,
+                    isActive: true,
+                    $or: [
+                        { activeTo: { $gt: new Date() } },
+                        { activeTo: null }
+                    ]
+                })
 
-				quoteServices.push({
+                // Calcular precio basado en la cantidad de personas
+                let price = service.basePrice
+                if (priceTier) {
+                    const tierPrice = priceTier.findPriceForPax(serviceData.quantity)
+                    if (tierPrice !== null) {
+                        price = tierPrice
+                    }
+                } else if (client.customPricing.has(service._id.toString())) {
+                    // Aplicar precio personalizado si no hay tarifa escalonada
+                    const customPrice = client.customPricing.get(service._id.toString())
+                    price = customPrice.basePrice
+                }
+
+                quoteServices.push({
 					service: service._id,
 					quantity: serviceData.quantity,
 					price,

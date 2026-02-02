@@ -24,14 +24,19 @@ router.use(authenticateToken)
  *             required:
  *               - name
  *               - description
- *               - price
+ *               - categoryId
  *             properties:
  *               name:
  *                 type: string
  *               description:
  *                 type: string
- *               price:
+ *               categoryId:
+ *                 type: string
+ *                 description: ID de la categoría a la que pertenece el servicio
+ *               scaledRateIndex:
  *                 type: number
+ *                 minimum: 0
+ *                 description: Índice de la tarifa escalonada a utilizar (si la categoría tiene precios escalonados)
  *     responses:
  *       201:
  *         description: Servicio creado exitosamente
@@ -104,14 +109,19 @@ router.get('/:id', serviceController.getServiceById)
  *             required:
  *               - name
  *               - description
- *               - price
+ *               - categoryId
  *             properties:
  *               name:
  *                 type: string
  *               description:
  *                 type: string
- *               price:
+ *               categoryId:
+ *                 type: string
+ *                 description: ID de la categoría a la que pertenece el servicio
+ *               scaledRateIndex:
  *                 type: number
+ *                 minimum: 0
+ *                 description: Índice de la tarifa escalonada a utilizar (si la categoría tiene precios escalonados)
  *     responses:
  *       200:
  *         description: Servicio actualizado exitosamente

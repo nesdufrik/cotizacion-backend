@@ -1,5 +1,4 @@
 import express from 'express'
-const router = express.Router()
 import categoryController from '../controllers/category.controller.js'
 import {
 	authenticateToken,
@@ -7,6 +6,8 @@ import {
 	validateSchema,
 } from '../middleware/auth.middleware.js'
 import { categorySchema } from '../schemas/validation.schemas.js'
+
+const router = express.Router()
 
 /**
  * @swagger
@@ -66,11 +67,25 @@ router.get('/:id', authenticateToken, categoryController.getCategoryById)
  *             required:
  *               - name
  *               - description
+ *               - hasScaledPricing
  *             properties:
  *               name:
  *                 type: string
  *               description:
  *                 type: string
+ *               hasScaledPricing:
+ *                 type: boolean
+ *               scaledRates:
+ *                 type: array
+ *                 items:
+ *                  type: object
+ *                  required:
+ *                    - name
+ *                  properties:
+ *                    name:
+ *                      type: string
+ *                    description:
+ *                      type: string
  *     responses:
  *       201:
  *         description: Categoría creada exitosamente

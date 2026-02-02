@@ -7,11 +7,20 @@ const priceSheetServiceSchema = new mongoose.Schema(
 			ref: 'Service',
 			required: true,
 		},
-		price: {
+		prices: [{
+			price: {
+				type: Number,
+				required: true,
+				min: 0
+			}
+		}],
+		basePrice: {
 			type: Number,
-			required: true,
 			min: 0,
-		},
+			required: function() {
+				return !this.prices || this.prices.length === 0;
+			}
+		}
 	},
 	{ _id: false }
 )

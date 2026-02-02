@@ -17,6 +17,21 @@ const categorySchema = new mongoose.Schema(
 			type: Boolean,
 			default: true,
 		},
+		hasScaledPricing: {
+			type: Boolean,
+			default: false,
+		},
+		scaledRates: [{
+			name: {
+				type: String,
+				required: true,
+				trim: true
+			},
+			description: {
+				type: String,
+				trim: true
+			}
+		}],
 	},
 	{
 		timestamps: true,
